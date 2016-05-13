@@ -1,6 +1,8 @@
 # infomarkers
 Simple and nice map markers with info for Google Maps.
 
+[Demo](http://ljl.github.io/infomarkers/)
+
 Using RichMarker from https://github.com/googlemaps/js-rich-marker
 
 Design inspired by Material Design Lite (getmdl.io)
