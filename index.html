@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <!--link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css" -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="map-container">
+      <div id="map"></div>
+      <div id="info"></div>
+    </div>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=<api-key>">
+    </script>
+    <script src="js/richmarker.js">
+    </script>
+    <script>
+      var data = [
+        {
+          lat: 59.9138688,
+          lng: 10.752245399999993,
+          header: 'Oslo',
+          text: 'Lorem ipsum dolor sit amet',
+          link: 'http://google.com',
+          icon: 'icons/beer.svg'
+        },
+        {
+          lat: 59.84995269,
+          lng: 10.86393753,
+          header: 'Copenhagen',
+          text: 'Lorem ipsum dolor sit amet',
+          link: 'http://google.com',
+          icon: 'icons/cupcake.svg'
+        },
+        {
+          lat: 59.87130971,
+          lng: 10.64768325,
+          header: 'Gothenburg',
+          text: 'Lorem ipsum dolor sit amet',
+          link: 'http://google.com',
+          icon: 'icons/hamburger.svg'
+        },
+        {
+          lat: 59.90907137,
+          lng: 10.87331153,
+          header: 'Thon',
+          text: 'Lorem ipsum dolor sit amet',
+          link: 'http://google.com',
+          icon: 'icons/beer.svg'
+        },
+        {
+          lat: 59.97100245,
+          lng: 10.64179874,
+          header: 'Hotel California',
+          text: 'Lorem ipsum dolor sit amet',
+          link: 'http://google.com',
+          icon: 'icons/cupcake.svg'
+        }
+    ];
+    var markers = [];
+    function clearMarkers() {
+      markers.forEach(function (marker) {
+        marker.content.classList.remove('active');
+      });
+    }
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: data[0]
+      });
+
+      map.addListener('click', function() {
+        info.classList.remove('show');
+        clearMarkers();
+      });
+
+
+      // Center map on resize, because why not
+      var center;
+      function calculateCenter() {
+        center = map.getCenter();
+      }
+      google.maps.event.addDomListener(map, 'idle', function() {
+        calculateCenter();
+      });
+      google.maps.event.addDomListener(window, 'resize', function() {
+        map.setCenter(center);
+      });
+
+      // Add markers from data
+      data.forEach(function(item) {
+       var markerDiv = document.createElement('DIV');
+       markerDiv.classList.add('marker');
+       markerDiv.innerHTML = '<img src="'+ item.icon +'"/>';
+
+       var marker = new RichMarker({
+         map: map,
+         position: new google.maps.LatLng(item.lat, item.lng),
+         flat: true,
+         anchor: RichMarkerPosition.BOTTOM,
+         content: markerDiv
+       });
+
+       marker.addListener('click', function() {
+         var info = document.getElementById('info');
+         info.innerHTML = '<h2>' + item.header + '</h2>' + '<p>' + item.text + '</p>' + '<a href="' + item.link +'">Read more' + '</a>';
+         info.classList.add('show');
+         clearMarkers();
+         markerDiv.classList.add('active');
+       });
+       markers.push(marker);
+      });
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        initMap();
+      });
+    </script>
+  </body>
+</html>

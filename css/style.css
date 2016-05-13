@@ -1,0 +1,60 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+#map {
+  height: 100%;
+  width: 100%;
+}
+.marker {
+  background-color: white;
+  box-sizing: content-box;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50% 50% 50% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-45deg);
+  border: 1px solid #ececec;
+}
+.marker.active {
+  background-color: rgb(33, 150, 243);
+}
+.marker img {
+  width: 80%;
+  transform: rotate(45deg);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.map-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+#info {
+  position: absolute;
+  bottom: -200px;
+  background-color: white;
+  width: 100%;
+  transition: all 0.5s ease-in-out 0s;
+  padding: 20px;
+  font-size: 16px;
+  box-sizing: border-box;
+  height: 200px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+#info.show {
+  bottom: 0;
+}
+#info h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 24px;
+}
+#info a {
+  color: rgb(33, 150, 243);
+}
