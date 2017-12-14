@@ -1,73 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>infomarkers</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="map-container">
-      <div id="map"></div>
-      <div id="info"></div>
-    </div>
-    <script
-    src="https://maps.googleapis.com/maps/api/js">
-    </script>
-    <script src="js/richmarker.js">
-    </script>
-    <script>
-      var data = [
-        {
-          lat: 59.9138688,
-          lng: 10.752245399999993,
-          header: 'Oslo',
-          text: 'Lorem ipsum dolor sit amet',
-          link: 'http://google.com',
-          icon: 'icons/beer.svg'
-        },
-        {
-          lat: 59.84995269,
-          lng: 10.86393753,
-          header: 'Copenhagen',
-          text: 'Lorem ipsum dolor sit amet',
-          link: 'http://google.com',
-          icon: 'icons/cupcake.svg'
-        },
-        {
-          lat: 59.87130971,
-          lng: 10.64768325,
-          header: 'Gothenburg',
-          text: 'Lorem ipsum dolor sit amet',
-          link: 'http://google.com',
-          icon: 'icons/hamburger.svg'
-        },
-        {
-          lat: 59.90907137,
-          lng: 10.87331153,
-          header: 'Thon',
-          text: 'Lorem ipsum dolor sit amet',
-          link: 'http://google.com',
-          icon: 'icons/beer.svg'
-        },
-        {
-          lat: 59.97100245,
-          lng: 10.64179874,
-          header: 'Hotel California',
-          text: 'Lorem ipsum dolor sit amet',
-          link: 'http://google.com',
-          icon: 'icons/cupcake.svg'
-        }
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>infomarkers</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="map-container">
+    <div id="map"></div>
+    <div id="info"></div>
+  </div>
+  <script src="https://maps.googleapis.com/maps/api/js">
+  </script>
+  <script src="js/richmarker.js">
+  </script>
+  <script>
+    var data = [{
+        lat: 48.85231,
+        lng: 2.337519,
+        header: 'Hotell',
+        text: '34 Rue Grégoire de Tours',
+        link: 'http://google.com',
+        icon: 'icons/hotel.svg'
+      },
+      {
+        lat: 48.834246,
+        lng: 2.315963,
+        header: 'La Cantine du Troquet',
+        text: '113-101 Rue de l`Ouest - 4 addresses in Paris, small bistro where we eat a lot of tricks (terrines, sausage, cheese) ... Address in the 14th, 15th, 17th and 6th.',
+        link: 'http://google.com',
+        icon: 'icons/food.svg'
+      },
+      {
+        lat: 48.854166,
+        lng: 2.33684,
+        header: 'Freddy`s',
+        text: '54 Rue de Seine - cellar to eat very good, in the 6th district: 54, rue de Seine Paris (75006). Opening hours: Every day, from midday to midnight. Cuisine from 12h30 to 15h and from 18h to 23h (no reservation).  It`s very good to nibble a little thing and taste at the same time to many different things.',
+        link: 'http://google.com',
+        icon: 'icons/food.svg'
+      },
+      {
+        lat: 59.90907137,
+        lng: 10.87331153,
+        header: 'Thon',
+        text: 'Lorem ipsum dolor sit amet',
+        link: 'http://google.com',
+        icon: 'icons/beer.svg'
+      },
+      {
+        lat: 59.97100245,
+        lng: 10.64179874,
+        header: 'Hotel California',
+        text: 'Lorem ipsum dolor sit amet',
+        link: 'http://google.com',
+        icon: 'icons/cupcake.svg'
+      }
     ];
     var markers = [];
+
     function clearMarkers() {
-      markers.forEach(function (marker) {
+      markers.forEach(function(marker) {
         marker.content.classList.remove('active');
       });
     }
+
     function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
+        zoom: 15,
         center: data[0]
       });
 
@@ -76,9 +78,9 @@
         clearMarkers();
       });
 
-
       // Center map on resize, because why not
       var center;
+
       function calculateCenter() {
         center = map.getCenter();
       }
@@ -91,31 +93,42 @@
 
       // Add markers from data
       data.forEach(function(item) {
-       var markerDiv = document.createElement('DIV');
-       markerDiv.classList.add('marker');
-       markerDiv.innerHTML = '<img src="'+ item.icon +'"/>';
+        var markerDiv = document.createElement('DIV');
+        markerDiv.classList.add('marker');
+        markerDiv.innerHTML = '<img src="' + item.icon + '"/>';
 
-       var marker = new RichMarker({
-         map: map,
-         position: new google.maps.LatLng(item.lat, item.lng),
-         flat: true,
-         anchor: RichMarkerPosition.BOTTOM,
-         content: markerDiv
-       });
+        var marker = new RichMarker({
+          map: map,
+          position: new google.maps.LatLng(item.lat, item.lng),
+          flat: true,
+          anchor: RichMarkerPosition.BOTTOM,
+          content: markerDiv
+        });
 
-       marker.addListener('click', function() {
-         var info = document.getElementById('info');
-         info.innerHTML = '<h2>' + item.header + '</h2>' + '<p>' + item.text + '</p>' + '<a href="' + item.link +'">Read more' + '</a>';
-         info.classList.add('show');
-         clearMarkers();
-         markerDiv.classList.add('active');
-       });
-       markers.push(marker);
+        marker.addListener('click', function() {
+          var info = document.getElementById('info');
+          info.innerHTML =
+            '<h2>' +
+            item.header +
+            '</h2>' +
+            '<p>' +
+            item.text +
+            '</p>' +
+            '<a href="' +
+            item.link +
+            '">Read more' +
+            '</a>';
+          info.classList.add('show');
+          clearMarkers();
+          markerDiv.classList.add('active');
+        });
+        markers.push(marker);
       });
-      }
-      document.addEventListener("DOMContentLoaded", function() {
-        initMap();
-      });
-    </script>
-  </body>
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      initMap();
+    });
+  </script>
+</body>
+
 </html>
